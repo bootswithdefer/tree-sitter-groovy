@@ -5,6 +5,7 @@ def a = 1
 String b = 2
 pipeline {}
 ---
+
 (source_file
   (declaration
     name: (identifier)
@@ -15,6 +16,7 @@ pipeline {}
     value: (number_literal))
   (pipeline
     (closure)))
+
 ==========
 Jenkins-specific structure
 ==========
@@ -37,6 +39,7 @@ pipeline {
   }
 }
 ---
+
 (source_file
   (pipeline
     (closure
@@ -84,6 +87,7 @@ pipeline {
                               (declaration
                                 name: (identifier)
                                 value: (identifier)))))))))))))))))
+
 ==========
 Jenkins-import underscore
 ==========
@@ -92,11 +96,12 @@ Jenkins-import underscore
 pipeline {
 }
 ---
+
 (source_file
   (declaration
     (annotation
       (identifier)
-      (argument_list
+      (annotation_arguments
         (string
           (string_content)))))
   (pipeline

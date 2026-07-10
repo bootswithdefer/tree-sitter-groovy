@@ -256,6 +256,7 @@ Single-line groovydoc
 /** Utility Methods */
 def foo() {}
 ---
+
 (source_file
   (groovy_doc
     (first_line))
@@ -269,6 +270,7 @@ Assert with message
 ==========
 assert x != null, "message"
 ---
+
 (source_file
   (assertion
     (binary_op
@@ -276,3 +278,448 @@ assert x != null, "message"
       (null))
     (string
       (string_content))))
+
+==========
+Destructuring declaration three vars
+==========
+def (a, b, c) = foo()
+---
+
+(source_file
+  (declaration
+    (destructuring_declaration
+      (identifier)
+      (identifier)
+      (identifier))
+    (function_call
+      (identifier)
+      (argument_list))))
+
+==========
+Tuple assignment three vars
+==========
+(a, b, c) = foo()
+---
+
+(source_file
+  (assignment
+    (destructuring_declaration
+      (identifier)
+      (identifier)
+      (identifier))
+    (function_call
+      (identifier)
+      (argument_list))))
+
+==========
+Closure params with explicit types
+==========
+def c = { String a, int b -> a }
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (closure
+      (parameter_list
+        (parameter
+          (identifier)
+          (identifier))
+        (parameter
+          (builtintype)
+          (identifier)))
+      (identifier))))
+
+==========
+Closure with def params
+==========
+def c = { def a, def b -> a }
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (closure
+      (parameter_list
+        (parameter
+          (identifier))
+        (parameter
+          (identifier)))
+      (identifier))))
+
+==========
+Closure no-arg arrow
+==========
+def c = { -> foo() }
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (closure
+      (function_call
+        (identifier)
+        (argument_list)))))
+
+==========
+Chained method closures
+==========
+def x = [1, 2].collect { it }.findAll { it > 0 }
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (dotted_identifier
+      (list
+        (number_literal)
+        (number_literal))
+      (identifier)))
+  (juxt_function_call
+    (dotted_identifier
+      (closure
+        (identifier))
+      (identifier))
+    (argument_list
+      (closure
+        (binary_op
+          (identifier)
+          (number_literal))))))
+
+==========
+Cast in method argument chain
+==========
+x.indexOf((int) ch)
+---
+
+(source_file
+  (function_call
+    (dotted_identifier
+      (identifier)
+      (identifier))
+    (argument_list
+      (cast
+        (builtintype)
+        (identifier)))))
+
+==========
+Cast to builtin assigned
+==========
+int x = (int) ch
+---
+
+(source_file
+  (declaration
+    (builtintype)
+    (identifier)
+    (cast
+      (builtintype)
+      (identifier))))
+
+==========
+For-in loop preserved
+==========
+for (x in list) { y() }
+---
+
+(source_file
+  (for_in_loop
+    (identifier)
+    (identifier)
+    (closure
+      (function_call
+        (identifier)
+        (argument_list)))))
+
+==========
+For each with def typed variable
+==========
+for (def x : list) { y() }
+---
+
+(source_file
+  (for_in_loop
+    (identifier)
+    (identifier)
+    (closure
+      (function_call
+        (identifier)
+        (argument_list)))))
+
+==========
+Assert without message
+==========
+assert x == 1
+---
+
+(source_file
+  (assertion
+    (binary_op
+      (identifier)
+      (number_literal))))
+
+==========
+Assert with interpolated message
+==========
+assert computer != null, "node '${node}' not found"
+---
+
+(source_file
+  (assertion
+    (binary_op
+      (identifier)
+      (null))
+    (string
+      (string_content)
+      (interpolation
+        (identifier))
+      (string_content))))
+
+==========
+Multi-line groovydoc preserved
+==========
+/**
+ * Does a thing.
+ * @param x the input
+ */
+def f(x) {}
+---
+
+(source_file
+  (groovy_doc
+    (first_line)
+    (groovy_doc_param
+      (identifier)))
+  (function_definition
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)))
+    (closure)))
+
+==========
+Explicit generic method two type args
+==========
+Collections.<String, Integer>emptyMap()
+---
+
+(source_file
+  (function_call
+    (dotted_identifier
+      (identifier)
+      (generics
+        (identifier)
+        (identifier))
+      (identifier))
+    (argument_list)))
+
+==========
+Map value method call with explicit parens
+==========
+a = [ c: x.collect({ it.id }), d: 1 ]
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (map
+      (map_item
+        (identifier)
+        (function_call
+          (dotted_identifier
+            (identifier)
+            (identifier))
+          (argument_list
+            (closure
+              (dotted_identifier
+                (identifier)
+                (identifier))))))
+      (map_item
+        (identifier)
+        (number_literal)))))
+
+==========
+Qualified name as comparison value
+==========
+def x = a.findAll { it.class == org.foo.Bar.Baz }
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (juxt_function_call
+      (dotted_identifier
+        (identifier)
+        (identifier))
+      (argument_list
+        (closure
+          (binary_op
+            (dotted_identifier
+              (identifier)
+              (identifier))
+            (dotted_identifier
+              (dotted_identifier
+                (dotted_identifier
+                  (identifier)
+                  (identifier))
+                (identifier))
+              (identifier))))))))
+
+==========
+Qualified return and parameter types
+==========
+java.util.ArrayList foo(java.util.LinkedHashMap tree, id) { bar() }
+---
+
+(source_file
+  (function_definition
+    (qualified_type
+      (identifier)
+      (identifier)
+      (identifier))
+    (identifier)
+    (parameter_list
+      (parameter
+        (qualified_type
+          (identifier)
+          (identifier)
+          (identifier))
+        (identifier))
+      (parameter
+        (identifier)))
+    (closure
+      (function_call
+        (identifier)
+        (argument_list)))))
+
+==========
+Regex as GString with dollar anchor
+==========
+def m = branches[0] ==~ "^${it.toString()}\$"
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (binary_op
+      (juxt_function_call
+        (identifier)
+        (argument_list
+          (list
+            (number_literal))))
+      (string
+        (string_content)
+        (interpolation
+          (function_call
+            (dotted_identifier
+              (identifier)
+              (identifier))
+            (argument_list)))
+        (escape_sequence)))))
+
+==========
+Annotation with single named argument
+==========
+@Field(name = "x")
+def y = 2
+---
+
+(source_file
+  (declaration
+    (annotation
+      (identifier)
+      (annotation_arguments
+        (annotation_member
+          (identifier)
+          (string
+            (string_content)))))
+    (identifier)
+    (number_literal)))
+
+==========
+Annotation with multiple named arguments
+==========
+@Timeout(value = 5, unit = SECONDS)
+class Foo {}
+---
+
+(source_file
+  (class_definition
+    (annotation
+      (identifier)
+      (annotation_arguments
+        (annotation_member
+          (identifier)
+          (number_literal))
+        (annotation_member
+          (identifier)
+          (identifier))))
+    (identifier)
+    (closure)))
+
+==========
+Annotation with positional argument
+==========
+@Grab("group:artifact:1.0")
+def y = 2
+---
+
+(source_file
+  (declaration
+    (annotation
+      (identifier)
+      (annotation_arguments
+        (string
+          (string_content))))
+    (identifier)
+    (number_literal)))
+
+==========
+Spread map entry
+==========
+def m = [*: base, k: 1]
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (map
+      (spread_map_entry
+        (identifier))
+      (map_item
+        (identifier)
+        (number_literal)))))
+
+==========
+Spread list element
+==========
+def x = [1, *other, 2]
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (list
+      (number_literal)
+      (access_op
+        (identifier))
+      (number_literal))))
+
+==========
+Varargs parameter
+==========
+def f(String x, int... args) { x }
+---
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)
+        (identifier))
+      (parameter
+        (builtintype)
+        (identifier)))
+    (closure
+      (identifier))))

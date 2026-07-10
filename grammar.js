@@ -105,7 +105,6 @@ module.exports = grammar({
         ),
         ...[
           ["*", PREC.TOP],
-          ["*:", PREC.TOP],
         ].map(([operator, precedence]) =>
           prec.left(precedence, seq(operator, $._expression))
         ),
@@ -149,8 +148,20 @@ module.exports = grammar({
       '@',
       alias(token.immediate(regexp_or([IDENTIFIER_REGEX, TYPE_REGEX])), $.identifier),
       repeat(seq('.', alias(token.immediate(regexp_or([IDENTIFIER_REGEX, TYPE_REGEX])), $.identifier))),
-      optional($.argument_list),
+      optional($.annotation_arguments),
     )),
+
+    annotation_arguments: $ => seq(
+      '(',
+      optional(list_of(choice($.annotation_member, $._expression))),
+      ')',
+    ),
+
+    annotation_member: $ => seq(
+      field('name', $.identifier),
+      '=',
+      field('value', $._expression),
+    ),
 
     assertion: $ => prec.right(seq('assert', $._expression, optional(seq(',', $._expression)))),
 
@@ -485,6 +496,7 @@ module.exports = grammar({
 
     parameter: $ => prec(-1, seq(
       optional(field('type', choice($._type, 'def'))),
+      optional('...'),
       field('name', $.identifier),
       optional(seq('=', field('value', $._primary_expression))),
     )),
@@ -596,16 +608,18 @@ module.exports = grammar({
         '[',
         repeat(
           prec.left(seq(
-            $.map_item,
+            choice($.map_item, $.spread_map_entry),
             ',',
           ))
         ),
-        $.map_item,
+        choice($.map_item, $.spread_map_entry),
         optional(','),
         ']',
       ),
       seq('[', ':', ']'),
     ),
+
+    spread_map_entry: $ => seq('*:', field('value', $._expression)),
 
     number_literal: $ => choice(
       /-?[0-9]+(_[0-9]+)*[DFGILdfgil]?/,

@@ -723,3 +723,29 @@ def f(String x, int... args) { x }
         (identifier)))
     (closure
       (identifier))))
+
+==========
+Continue statement
+==========
+while (x) { continue }
+---
+(source_file
+  (while_loop
+    condition: (parenthesized_expression
+      (identifier))
+    body: (closure
+      (continue))))
+
+==========
+Triple-quoted string with internal quotes before escape
+==========
+def s = '''x''\ny'''
+---
+(source_file
+  (declaration
+    name: (identifier)
+    value: (string
+      (string_content)
+      (string_internal_quote)
+      (escape_sequence)
+      (string_content))))

@@ -13,3 +13,9 @@ repos:
         language: system
         files: (grammar\.js|test/corpus/.*\.test)
         pass_filenames: false
+      - id: tree-sitter-coverage
+        name: tree-sitter node-type coverage
+        entry: ./scripts/coverage.sh
+        language: system
+        files: (grammar\.js|test/corpus/.*\.test)
+        pass_filenames: false

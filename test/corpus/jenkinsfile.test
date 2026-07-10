@@ -190,3 +190,76 @@ try {
       (function_call
         function: (identifier)
         args: (argument_list)))))
+
+==========
+Type cast as argument
+==========
+foo((int) ch)
+---
+
+(source_file
+  (function_call
+    function: (identifier)
+    args: (argument_list
+      (cast
+        type: (builtintype)
+        value: (identifier)))))
+
+==========
+Enhanced for loop with typed variable
+==========
+for (char ch : arr) { x() }
+---
+
+(source_file
+  (for_in_loop
+    type: (builtintype)
+    variable: (identifier)
+    collection: (identifier)
+    body: (closure
+      (function_call
+        function: (identifier)
+        args: (argument_list)))))
+
+==========
+Explicit generic method invocation
+==========
+Collections.<DomainRequirement>emptyList()
+---
+
+(source_file
+  (function_call
+    function: (dotted_identifier
+      (identifier)
+      (generics
+        (identifier))
+      (identifier))
+    args: (argument_list)))
+
+==========
+Line continuation with backslash
+==========
+def x = a +\
+  b
+---
+
+(source_file
+  (declaration
+    name: (identifier)
+    value: (binary_op
+      (identifier)
+      (identifier))))
+
+==========
+Single-line groovydoc
+==========
+/** Utility Methods */
+def foo() {}
+---
+(source_file
+  (groovy_doc
+    (first_line))
+  (function_definition
+    function: (identifier)
+    parameters: (parameter_list)
+    body: (closure)))

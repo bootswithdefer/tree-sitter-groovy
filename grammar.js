@@ -33,7 +33,7 @@ const list_of = (e) => seq(
 module.exports = grammar({
   name: 'groovy',
 
-  extras: $ => [/\s/, $.comment, $.groovy_doc],
+  extras: $ => [/\s/, /\\\r?\n/, $.comment, $.groovy_doc],
 
   word: $ => $.identifier,
 
@@ -116,6 +116,7 @@ module.exports = grammar({
         choice($._primary_expression, $._type_identifier, $.closure),
         repeat1(seq(
         '.',
+        optional($.generics),
         choice(
           $.identifier,
           $.quoted_identifier,
@@ -265,7 +266,7 @@ module.exports = grammar({
         '/**',
         // optional(
           token.immediate(/[*\n\s]+/),
-          alias(token.immediate(/[^\n\.]+[\.]?/), $.first_line),
+          alias(token.immediate(/([^\n.*]|\*[^/])+[.]?/), $.first_line),
         // ),
         repeat(
           choice(
@@ -354,7 +355,16 @@ module.exports = grammar({
       $.access_op,
       $.closure,
       $.juxt_function_call,
+      $.cast,
       alias("null", $.null),
+    )),
+
+    // Type cast: (Type) expression
+    cast: $ => prec.right(PREC.UNARY, seq(
+      '(',
+      field('type', $._type),
+      ')',
+      field('value', $._expression),
     )),
 
     // Like _expression but without juxt_function_call to prevent
@@ -430,8 +440,9 @@ module.exports = grammar({
     for_in_loop: $ => prec(1, seq(
       'for',
       '(',
+      optional(field('type', choice($._type, 'def'))),
       field('variable', $.identifier),
-      'in',
+      choice('in', ':'),
       field('collection', $._expression),
       ')',
       field('body', choice(

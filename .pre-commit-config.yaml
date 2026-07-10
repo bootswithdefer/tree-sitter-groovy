@@ -1,0 +1,15 @@
+repos:
+  - repo: local
+    hooks:
+      - id: tree-sitter-generate
+        name: tree-sitter generate
+        entry: tree-sitter generate
+        language: system
+        files: grammar.js
+        pass_filenames: false
+      - id: tree-sitter-test
+        name: tree-sitter test
+        entry: ./scripts/test.sh
+        language: system
+        files: (grammar\.js|test/corpus/.*\.test)
+        pass_filenames: false

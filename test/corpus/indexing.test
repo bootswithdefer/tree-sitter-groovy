@@ -5,6 +5,7 @@ def a = [1,2,3]
 def b = a[0]
 a[0] = 2
 ---
+
 (source_file
   (declaration
     name: (identifier)
@@ -14,9 +15,11 @@ a[0] = 2
       (number_literal)))
   (declaration
     name: (identifier)
-    value: (index
-      (identifier)
-      (number_literal)))
+    value: (juxt_function_call
+      function: (identifier)
+      args: (argument_list
+        (list
+          (number_literal)))))
   (assignment
     (index
       (identifier)

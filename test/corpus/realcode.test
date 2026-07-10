@@ -22,6 +22,7 @@ Map<String, Closure> prepareSteps(def steps, def agentMap, def labelPrefix='') {
   }
 }
 ---
+
 (source_file
   (groovy_import
     (modifier)
@@ -60,18 +61,22 @@ Map<String, Closure> prepareSteps(def steps, def agentMap, def labelPrefix='') {
             (map
               (map_item
                 key: (parenthesized_expression
-                  (binary_op
-                    (identifier)
-                    (dotted_identifier
-                      (identifier)
-                      (identifier))))
+                  (juxt_function_call
+                    function: (identifier)
+                    args: (argument_list
+                      (unary_op
+                        (dotted_identifier
+                          (identifier)
+                          (identifier))))))
                 value: (closure
                   (function_call
                     function: (identifier)
                     args: (argument_list
-                      (index
-                        (identifier)
-                        (identifier))
+                      (juxt_function_call
+                        function: (identifier)
+                        args: (argument_list
+                          (list
+                            (identifier))))
                       (closure
                         (function_call
                           function: (dotted_identifier

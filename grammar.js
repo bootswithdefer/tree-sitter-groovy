@@ -69,7 +69,6 @@ module.exports = grammar({
         $.assignment,
         $.class_definition,
         $.declaration,
-        $.multi_variable_declaration,
         $.do_while_loop,
         $.for_in_loop,
         $.for_loop,
@@ -114,7 +113,7 @@ module.exports = grammar({
 
     dotted_identifier: $ =>
       prec.left(1, seq(
-        choice($._primary_expression, $._type_identifier),
+        choice($._primary_expression, $._type_identifier, $.closure),
         repeat1(seq(
         '.',
         choice(
@@ -339,13 +338,6 @@ module.exports = grammar({
       ')',
     ),
 
-    // def a, b, c (no initializer allowed)
-    multi_variable_declaration: $ => prec(2, seq(
-      'def',
-      $.identifier,
-      repeat1(seq(',', $.identifier)),
-    )),
-
     parenthesized_expression: ($) =>
       prec(PREC.PRIORITY, choice(
         seq("(",
@@ -360,6 +352,7 @@ module.exports = grammar({
       $.ternary_op,
       $.unary_op,
       $.access_op,
+      $.closure,
       $.juxt_function_call,
       alias("null", $.null),
     )),
@@ -373,6 +366,7 @@ module.exports = grammar({
       $.ternary_op,
       $.unary_op,
       $.access_op,
+      $.closure,
       alias("null", $.null),
     )),
 
@@ -382,7 +376,6 @@ module.exports = grammar({
       $.string,
       $.list,
       $.map,
-      $.closure,
       $._callable_expression,
     )),
 

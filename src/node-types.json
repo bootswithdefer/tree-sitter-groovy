@@ -687,10 +687,6 @@
           "named": true
         },
         {
-          "type": "multi_variable_declaration",
-          "named": true
-        },
-        {
           "type": "null",
           "named": true
         },
@@ -773,10 +769,6 @@
         "types": [
           {
             "type": "boolean_literal",
-            "named": true
-          },
-          {
-            "type": "closure",
             "named": true
           },
           {
@@ -955,10 +947,6 @@
         },
         {
           "type": "map",
-          "named": true
-        },
-        {
-          "type": "multi_variable_declaration",
           "named": true
         },
         {
@@ -1296,10 +1284,6 @@
             "named": true
           },
           {
-            "type": "multi_variable_declaration",
-            "named": true
-          },
-          {
             "type": "null",
             "named": true
           },
@@ -1534,10 +1518,6 @@
           },
           {
             "type": "map",
-            "named": true
-          },
-          {
-            "type": "multi_variable_declaration",
             "named": true
           },
           {
@@ -1798,10 +1778,6 @@
           },
           {
             "type": "map",
-            "named": true
-          },
-          {
-            "type": "multi_variable_declaration",
             "named": true
           },
           {
@@ -2066,10 +2042,6 @@
           },
           {
             "type": "map",
-            "named": true
-          },
-          {
-            "type": "multi_variable_declaration",
             "named": true
           },
           {
@@ -2680,10 +2652,6 @@
             "named": true
           },
           {
-            "type": "multi_variable_declaration",
-            "named": true
-          },
-          {
             "type": "null",
             "named": true
           },
@@ -2856,10 +2824,6 @@
             "named": true
           },
           {
-            "type": "multi_variable_declaration",
-            "named": true
-          },
-          {
             "type": "null",
             "named": true
           },
@@ -2917,10 +2881,6 @@
       "types": [
         {
           "type": "boolean_literal",
-          "named": true
-        },
-        {
-          "type": "closure",
           "named": true
         },
         {
@@ -3388,21 +3348,6 @@
     "fields": {}
   },
   {
-    "type": "multi_variable_declaration",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "number_literal",
     "named": true,
     "fields": {}
@@ -3457,10 +3402,6 @@
         "types": [
           {
             "type": "boolean_literal",
-            "named": true
-          },
-          {
-            "type": "closure",
             "named": true
           },
           {
@@ -3880,10 +3821,6 @@
         },
         {
           "type": "map",
-          "named": true
-        },
-        {
-          "type": "multi_variable_declaration",
           "named": true
         },
         {
@@ -4378,10 +4315,6 @@
             "named": true
           },
           {
-            "type": "multi_variable_declaration",
-            "named": true
-          },
-          {
             "type": "null",
             "named": true
           },
@@ -4771,10 +4704,6 @@
           },
           {
             "type": "map",
-            "named": true
-          },
-          {
-            "type": "multi_variable_declaration",
             "named": true
           },
           {

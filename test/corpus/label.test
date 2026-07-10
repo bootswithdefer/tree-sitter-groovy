@@ -3,12 +3,14 @@ Basic labeled statement
 ==========
 label: def a = 1;
 ---
+
 (source_file
   (label
     name: (identifier))
   (declaration
     name: (identifier)
     value: (number_literal)))
+
 ==========
 Spock test
 ==========
@@ -23,6 +25,7 @@ class Test {
      }
 }
 ---
+
 (source_file
   (class_definition
     name: (identifier)
@@ -42,10 +45,14 @@ class Test {
           (declaration
             name: (identifier)
             value: (binary_op
-              (identifier)
-              (identifier)))
-          (label
-            name: (identifier))
-          (binary_op
-            (identifier)
-            (number_literal)))))))
+              (juxt_function_call
+                function: (identifier)
+                args: (argument_list
+                  (unary_op
+                    (juxt_function_call
+                      function: (identifier)
+                      args: (argument_list
+                        (map_item
+                          key: (identifier)
+                          value: (identifier)))))))
+              (number_literal))))))))

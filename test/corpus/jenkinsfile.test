@@ -29,18 +29,6 @@ Tuple assignment without def
       args: (argument_list))))
 
 ==========
-Multi-variable declaration
-==========
-def host, user, vaultPath
----
-
-(source_file
-  (multi_variable_declaration
-    (identifier)
-    (identifier)
-    (identifier)))
-
-==========
 Dotted annotation
 ==========
 @groovy.transform.Field

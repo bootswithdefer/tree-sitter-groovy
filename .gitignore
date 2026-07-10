@@ -1,1 +1,8 @@
 build/
+node_modules/
+
+# Compiled artifacts (rebuild with: tree-sitter build --wasm)
+*.so
+*.dylib
+*.dll
+*.wasm

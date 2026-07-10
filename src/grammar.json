@@ -96,6 +96,10 @@
               },
               {
                 "type": "SYMBOL",
+                "name": "multi_variable_declaration"
+              },
+              {
+                "type": "SYMBOL",
                 "name": "do_while_loop"
               },
               {
@@ -2149,6 +2153,39 @@
         }
       ]
     },
+    "multi_variable_declaration": {
+      "type": "PREC",
+      "value": 2,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "def"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "identifier"
+          },
+          {
+            "type": "REPEAT1",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ","
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
     "parenthesized_expression": {
       "type": "PREC",
       "value": 2,
@@ -2216,10 +2253,6 @@
           },
           {
             "type": "SYMBOL",
-            "name": "closure"
-          },
-          {
-            "type": "SYMBOL",
             "name": "juxt_function_call"
           },
           {
@@ -2259,6 +2292,10 @@
           {
             "type": "SYMBOL",
             "name": "map"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "closure"
           },
           {
             "type": "SYMBOL",

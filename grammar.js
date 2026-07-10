@@ -46,8 +46,7 @@ module.exports = grammar({
   rules: {
     source_file: $ => seq(
       optional($.shebang),
-      repeat($._statement),
-      optional($.pipeline)
+      repeat(choice($._statement, $.pipeline)),
     ),
 
     shebang: $ => seq(

@@ -47,6 +47,7 @@ module.exports = grammar({
     [$._juxt_argument_list, $.map_item],
     [$.declaration, $.parameter],
     [$.destructuring_declaration, $._juxtable_expression],
+    [$._expression, $._map_value],
   ],
 
   rules: {
@@ -360,6 +361,18 @@ module.exports = grammar({
       alias("null", $.null),
     )),
 
+    // Like _expression but without juxt_function_call to prevent
+    // greedy cross-line consumption in map_item values
+    _map_value: $ => prec(1, choice(
+      $._primary_expression,
+      $.increment_op,
+      $.binary_op,
+      $.ternary_op,
+      $.unary_op,
+      $.access_op,
+      alias("null", $.null),
+    )),
+
     _primary_expression: $ => prec.left(1, choice(
       $.number_literal,
       $.boolean_literal,
@@ -568,7 +581,7 @@ module.exports = grammar({
         $.parenthesized_expression,
       )),
       ':',
-      field('value', $._expression),
+      field('value', $._map_value),
     ),
 
     map: $ => choice(

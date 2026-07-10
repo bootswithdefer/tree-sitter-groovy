@@ -41,6 +41,10 @@ module.exports = grammar({
     [$._callable_expression, $.juxt_function_call],
     [$._callable_expression, $._juxt_argument_list],
     [$._juxtable_expression, $._juxt_argument_list],
+    [$._juxtable_expression, $.qualified_type],
+    [$.dotted_identifier, $.qualified_type],
+    [$.map_item, $.ternary_op],
+    [$._juxt_argument_list, $.map_item],
   ],
 
   rules: {
@@ -343,6 +347,7 @@ module.exports = grammar({
       $.unary_op,
       $.access_op,
       $.closure,
+      $.juxt_function_call,
       alias("null", $.null),
     )),
 
@@ -767,8 +772,14 @@ module.exports = grammar({
       $.builtintype,
       $.array_type, //TODO: int[5]?
       $.type_with_generics,
+      $.qualified_type,
       $._type_identifier,
     )),
+
+    qualified_type: $ => seq(
+      choice($.identifier, $._type_identifier),
+      repeat1(seq('.', choice($.identifier, $._type_identifier))),
+    ),
 
     array_type: $ => seq($._type, '[]'),
 

@@ -2219,6 +2219,10 @@
             "name": "closure"
           },
           {
+            "type": "SYMBOL",
+            "name": "juxt_function_call"
+          },
+          {
             "type": "ALIAS",
             "content": {
               "type": "STRING",
@@ -4414,10 +4418,57 @@
           },
           {
             "type": "SYMBOL",
+            "name": "qualified_type"
+          },
+          {
+            "type": "SYMBOL",
             "name": "_type_identifier"
           }
         ]
       }
+    },
+    "qualified_type": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "identifier"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_type_identifier"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "."
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "identifier"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_type_identifier"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
     },
     "array_type": {
       "type": "SEQ",
@@ -4689,6 +4740,22 @@
     [
       "_juxtable_expression",
       "_juxt_argument_list"
+    ],
+    [
+      "_juxtable_expression",
+      "qualified_type"
+    ],
+    [
+      "dotted_identifier",
+      "qualified_type"
+    ],
+    [
+      "map_item",
+      "ternary_op"
+    ],
+    [
+      "_juxt_argument_list",
+      "map_item"
     ]
   ],
   "precedences": [],

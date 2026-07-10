@@ -332,6 +332,10 @@
           "named": true
         },
         {
+          "type": "destructuring_declaration",
+          "named": true
+        },
+        {
           "type": "dotted_identifier",
           "named": true
         },

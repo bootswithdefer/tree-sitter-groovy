@@ -558,6 +558,30 @@
             "value": "identifier"
           },
           {
+            "type": "REPEAT",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "."
+                },
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "IMMEDIATE_TOKEN",
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "(?:((?:([$_a-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u00F8\\u0100-\\uFFFE][$_0-9a-zA-Z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u00F8\\u0100-\\uFFFE]*))|(?:([_A-Z][$_0-9A-Z]*))))|(?:([A-Z][$_0-9a-zA-Z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u00F8\\u0100-\\uFFFE]*))"
+                    }
+                  },
+                  "named": true,
+                  "value": "identifier"
+                }
+              ]
+            }
+          },
+          {
             "type": "CHOICE",
             "members": [
               {
@@ -604,6 +628,10 @@
                   {
                     "type": "SYMBOL",
                     "name": "parenthesized_expression"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "destructuring_declaration"
                   }
                 ]
               },
@@ -4788,6 +4816,10 @@
     [
       "declaration",
       "parameter"
+    ],
+    [
+      "destructuring_declaration",
+      "_juxtable_expression"
     ]
   ],
   "precedences": [],

@@ -46,6 +46,7 @@ module.exports = grammar({
     [$.map_item, $.ternary_op],
     [$._juxt_argument_list, $.map_item],
     [$.declaration, $.parameter],
+    [$.destructuring_declaration, $._juxtable_expression],
   ],
 
   rules: {
@@ -146,6 +147,7 @@ module.exports = grammar({
     annotation: $ => prec.right(seq(
       '@',
       alias(token.immediate(regexp_or([IDENTIFIER_REGEX, TYPE_REGEX])), $.identifier),
+      repeat(seq('.', alias(token.immediate(regexp_or([IDENTIFIER_REGEX, TYPE_REGEX])), $.identifier))),
       optional($.argument_list),
     )),
 
@@ -153,7 +155,7 @@ module.exports = grammar({
 
     assignment: $ => prec(-1, choice( //??? is -1 ok here? (fixes conflict with expression for ++)
       seq(
-        choice($._juxtable_expression, $.parenthesized_expression),
+        choice($._juxtable_expression, $.parenthesized_expression, $.destructuring_declaration),
         choice('=', '**=', '*=', '/=', '%=', '+=', '-=',
           '<<=', '>>=', '>>>=', '&=', '^=', '|=', '?='),
         $._expression

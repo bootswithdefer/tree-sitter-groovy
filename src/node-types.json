@@ -3456,14 +3456,6 @@
         "required": false,
         "types": [
           {
-            "type": "access_op",
-            "named": true
-          },
-          {
-            "type": "binary_op",
-            "named": true
-          },
-          {
             "type": "boolean_literal",
             "named": true
           },
@@ -3484,15 +3476,7 @@
             "named": true
           },
           {
-            "type": "increment_op",
-            "named": true
-          },
-          {
             "type": "index",
-            "named": true
-          },
-          {
-            "type": "juxt_function_call",
             "named": true
           },
           {
@@ -3501,10 +3485,6 @@
           },
           {
             "type": "map",
-            "named": true
-          },
-          {
-            "type": "null",
             "named": true
           },
           {
@@ -3520,16 +3500,8 @@
             "named": true
           },
           {
-            "type": "ternary_op",
-            "named": true
-          },
-          {
             "type": "this",
             "named": false
-          },
-          {
-            "type": "unary_op",
-            "named": true
           }
         ]
       }

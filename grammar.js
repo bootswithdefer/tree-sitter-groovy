@@ -45,6 +45,7 @@ module.exports = grammar({
     [$.dotted_identifier, $.qualified_type],
     [$.map_item, $.ternary_op],
     [$._juxt_argument_list, $.map_item],
+    [$.declaration, $.parameter],
   ],
 
   rules: {
@@ -242,11 +243,10 @@ module.exports = grammar({
 
     closure: $ => seq(
       '{',
-      optional(choice('->', seq(alias($._param_list, $.parameter_list), '->'))),
-      // repeat(choice($._statement, $._expression)),
+      optional(seq(alias($._param_list, $.parameter_list), '->')),
       repeat($._statement),
       optional($._expression),
-      '}'
+      '}',
     ),
 
     comment: $ => choice(
@@ -464,7 +464,7 @@ module.exports = grammar({
     parameter: $ => prec(-1, seq(
       optional(field('type', choice($._type, 'def'))),
       field('name', $.identifier),
-      optional(seq('=', field('value', $._expression))),
+      optional(seq('=', field('value', $._primary_expression))),
     )),
 
     function_declaration: $ => prec(2, seq(

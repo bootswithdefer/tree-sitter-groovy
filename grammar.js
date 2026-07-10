@@ -297,7 +297,10 @@ module.exports = grammar({
             '_',
             seq(
               choice(field('type', $._type), 'def'),
-              field('name', $.identifier),
+              choice(
+                field('name', $.identifier),
+                field('name', $.destructuring_declaration),
+              ),
               optional(seq('=', field('value', $._expression)))
             ),
           )
@@ -308,12 +311,22 @@ module.exports = grammar({
             '_',
             seq(
               optional(choice(field('type', $._type), 'def')),
-              field('name', $.identifier),
+              choice(
+                field('name', $.identifier),
+                field('name', $.destructuring_declaration),
+              ),
               optional(seq('=', field('value', $._expression)))
             ),
           )
         ),
       ),
+    ),
+
+    destructuring_declaration: $ => seq(
+      '(',
+      $.identifier,
+      repeat(seq(',', $.identifier)),
+      ')',
     ),
 
     parenthesized_expression: ($) =>

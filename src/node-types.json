@@ -979,6 +979,10 @@
         "required": false,
         "types": [
           {
+            "type": "destructuring_declaration",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           }
@@ -1099,6 +1103,21 @@
         },
         {
           "type": "modifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "destructuring_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         }
       ]

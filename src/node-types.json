@@ -57,6 +57,10 @@
           "named": true
         },
         {
+          "type": "lambda_expression",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -70,6 +74,10 @@
         },
         {
           "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
           "named": true
         },
         {
@@ -167,6 +175,10 @@
           "named": true
         },
         {
+          "type": "lambda_expression",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -180,6 +192,10 @@
         },
         {
           "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
           "named": true
         },
         {
@@ -264,6 +280,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -277,6 +297,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -306,7 +330,28 @@
   {
     "type": "argument_list",
     "named": true,
-    "fields": {},
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "lambda_expression",
+            "named": true
+          }
+        ]
+      },
+      "parameters": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "lambda_expression",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": false,
@@ -356,6 +401,10 @@
           "named": true
         },
         {
+          "type": "lambda_expression",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -373,6 +422,10 @@
         },
         {
           "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
           "named": true
         },
         {
@@ -478,6 +531,10 @@
           "named": true
         },
         {
+          "type": "lambda_expression",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -491,6 +548,10 @@
         },
         {
           "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
           "named": true
         },
         {
@@ -569,6 +630,10 @@
           "named": true
         },
         {
+          "type": "lambda_expression",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -582,6 +647,10 @@
         },
         {
           "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
           "named": true
         },
         {
@@ -656,6 +725,10 @@
           "named": true
         },
         {
+          "type": "lambda_expression",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -669,6 +742,10 @@
         },
         {
           "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
           "named": true
         },
         {
@@ -753,6 +830,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -766,6 +847,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -900,6 +985,10 @@
           "named": true
         },
         {
+          "type": "lambda_expression",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -913,6 +1002,10 @@
         },
         {
           "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
           "named": true
         },
         {
@@ -1029,6 +1122,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -1042,6 +1139,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -1092,6 +1193,32 @@
           }
         ]
       },
+      "interface": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "array_type",
+            "named": true
+          },
+          {
+            "type": "builtintype",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "qualified_type",
+            "named": true
+          },
+          {
+            "type": "type_with_generics",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -1136,6 +1263,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -1285,6 +1416,10 @@
           "named": true
         },
         {
+          "type": "lambda_expression",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -1298,6 +1433,10 @@
         },
         {
           "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
           "named": true
         },
         {
@@ -1438,6 +1577,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -1451,6 +1594,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -1627,6 +1774,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -1640,6 +1791,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -1738,6 +1893,10 @@
         },
         {
           "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
           "named": true
         },
         {
@@ -1872,6 +2031,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -1885,6 +2048,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -1974,6 +2141,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -1987,6 +2158,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -2170,6 +2345,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -2183,6 +2362,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -2288,6 +2471,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -2301,6 +2488,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -2442,6 +2633,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -2455,6 +2650,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -2683,7 +2882,7 @@
       },
       "type": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "array_type",
@@ -2726,6 +2925,10 @@
         },
         {
           "type": "modifier",
+          "named": true
+        },
+        {
+          "type": "type_parameters",
           "named": true
         }
       ]
@@ -2794,7 +2997,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "array_type",
@@ -3053,6 +3256,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -3066,6 +3273,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -3229,6 +3440,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -3242,6 +3457,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -3325,6 +3544,10 @@
           "named": true
         },
         {
+          "type": "object_creation",
+          "named": true
+        },
+        {
           "type": "parenthesized_expression",
           "named": true
         },
@@ -3388,6 +3611,10 @@
           "named": true
         },
         {
+          "type": "lambda_expression",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -3401,6 +3628,10 @@
         },
         {
           "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
           "named": true
         },
         {
@@ -3475,6 +3706,10 @@
           "named": true
         },
         {
+          "type": "lambda_expression",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -3488,6 +3723,10 @@
         },
         {
           "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
           "named": true
         },
         {
@@ -3560,6 +3799,298 @@
     }
   },
   {
+    "type": "lambda_expression",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "access_op",
+            "named": true
+          },
+          {
+            "type": "binary_op",
+            "named": true
+          },
+          {
+            "type": "boolean_literal",
+            "named": true
+          },
+          {
+            "type": "cast",
+            "named": true
+          },
+          {
+            "type": "closure",
+            "named": true
+          },
+          {
+            "type": "dotted_identifier",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "increment_op",
+            "named": true
+          },
+          {
+            "type": "index",
+            "named": true
+          },
+          {
+            "type": "juxt_function_call",
+            "named": true
+          },
+          {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
+            "type": "list",
+            "named": true
+          },
+          {
+            "type": "map",
+            "named": true
+          },
+          {
+            "type": "null",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "ternary_op",
+            "named": true
+          },
+          {
+            "type": "this",
+            "named": false
+          },
+          {
+            "type": "unary_op",
+            "named": true
+          }
+        ]
+      },
+      "parameters": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "parameter",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "access_op",
+          "named": true
+        },
+        {
+          "type": "assertion",
+          "named": true
+        },
+        {
+          "type": "assignment",
+          "named": true
+        },
+        {
+          "type": "binary_op",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "break",
+          "named": true
+        },
+        {
+          "type": "cast",
+          "named": true
+        },
+        {
+          "type": "class_definition",
+          "named": true
+        },
+        {
+          "type": "closure",
+          "named": true
+        },
+        {
+          "type": "continue",
+          "named": true
+        },
+        {
+          "type": "declaration",
+          "named": true
+        },
+        {
+          "type": "do_while_loop",
+          "named": true
+        },
+        {
+          "type": "dotted_identifier",
+          "named": true
+        },
+        {
+          "type": "for_in_loop",
+          "named": true
+        },
+        {
+          "type": "for_loop",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "function_declaration",
+          "named": true
+        },
+        {
+          "type": "function_definition",
+          "named": true
+        },
+        {
+          "type": "groovy_import",
+          "named": true
+        },
+        {
+          "type": "groovy_package",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "increment_op",
+          "named": true
+        },
+        {
+          "type": "index",
+          "named": true
+        },
+        {
+          "type": "juxt_function_call",
+          "named": true
+        },
+        {
+          "type": "label",
+          "named": true
+        },
+        {
+          "type": "lambda_expression",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        },
+        {
+          "type": "map",
+          "named": true
+        },
+        {
+          "type": "null",
+          "named": true
+        },
+        {
+          "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
+          "named": true
+        },
+        {
+          "type": "parameter_list",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "return",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "switch_statement",
+          "named": true
+        },
+        {
+          "type": "ternary_op",
+          "named": true
+        },
+        {
+          "type": "try_statement",
+          "named": true
+        },
+        {
+          "type": "unary_op",
+          "named": true
+        },
+        {
+          "type": "while_loop",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "list",
     "named": true,
     "fields": {},
@@ -3612,6 +4143,10 @@
           "named": true
         },
         {
+          "type": "lambda_expression",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -3625,6 +4160,10 @@
         },
         {
           "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
           "named": true
         },
         {
@@ -3748,6 +4287,10 @@
             "named": true
           },
           {
+            "type": "object_creation",
+            "named": true
+          },
+          {
             "type": "parenthesized_expression",
             "named": true
           },
@@ -3780,6 +4323,136 @@
     "type": "number_literal",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "object_creation",
+    "named": true,
+    "fields": {
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "array_type",
+            "named": true
+          },
+          {
+            "type": "builtintype",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "qualified_type",
+            "named": true
+          },
+          {
+            "type": "type_with_generics",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "access_op",
+          "named": true
+        },
+        {
+          "type": "argument_list",
+          "named": true
+        },
+        {
+          "type": "binary_op",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "cast",
+          "named": true
+        },
+        {
+          "type": "closure",
+          "named": true
+        },
+        {
+          "type": "dotted_identifier",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "generics",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "increment_op",
+          "named": true
+        },
+        {
+          "type": "index",
+          "named": true
+        },
+        {
+          "type": "juxt_function_call",
+          "named": true
+        },
+        {
+          "type": "lambda_expression",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        },
+        {
+          "type": "map",
+          "named": true
+        },
+        {
+          "type": "null",
+          "named": true
+        },
+        {
+          "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "ternary_op",
+          "named": true
+        },
+        {
+          "type": "unary_op",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "parameter",
@@ -3859,6 +4532,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -3945,6 +4622,10 @@
           "named": true
         },
         {
+          "type": "lambda_expression",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -3958,6 +4639,10 @@
         },
         {
           "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
           "named": true
         },
         {
@@ -4104,6 +4789,10 @@
           "named": true
         },
         {
+          "type": "lambda_expression",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -4117,6 +4806,10 @@
         },
         {
           "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
           "named": true
         },
         {
@@ -4257,6 +4950,10 @@
           "named": true
         },
         {
+          "type": "lambda_expression",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -4270,6 +4967,10 @@
         },
         {
           "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
           "named": true
         },
         {
@@ -4368,6 +5069,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -4381,6 +5086,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -4528,6 +5237,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -4541,6 +5254,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -4614,6 +5331,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -4627,6 +5348,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -4700,6 +5425,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -4713,6 +5442,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -4856,6 +5589,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -4869,6 +5606,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -4972,6 +5713,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -4985,6 +5730,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -5019,6 +5768,37 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "type_parameters",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "array_type",
+          "named": true
+        },
+        {
+          "type": "builtintype",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "qualified_type",
+          "named": true
+        },
+        {
+          "type": "type_with_generics",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -5109,6 +5889,10 @@
           "named": true
         },
         {
+          "type": "lambda_expression",
+          "named": true
+        },
+        {
           "type": "list",
           "named": true
         },
@@ -5122,6 +5906,10 @@
         },
         {
           "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "object_creation",
           "named": true
         },
         {
@@ -5260,6 +6048,10 @@
             "named": true
           },
           {
+            "type": "lambda_expression",
+            "named": true
+          },
+          {
             "type": "list",
             "named": true
           },
@@ -5273,6 +6065,10 @@
           },
           {
             "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "object_creation",
             "named": true
           },
           {
@@ -5642,6 +6438,10 @@
     "named": false
   },
   {
+    "type": "abstract",
+    "named": false
+  },
+  {
     "type": "as",
     "named": false
   },
@@ -5746,6 +6546,10 @@
     "named": false
   },
   {
+    "type": "implements",
+    "named": false
+  },
+  {
     "type": "import",
     "named": false
   },
@@ -5767,6 +6571,10 @@
   },
   {
     "type": "long",
+    "named": false
+  },
+  {
+    "type": "native",
     "named": false
   },
   {
@@ -5810,6 +6618,10 @@
     "named": false
   },
   {
+    "type": "strictfp",
+    "named": false
+  },
+  {
     "type": "string_content",
     "named": true
   },
@@ -5830,6 +6642,10 @@
     "named": false
   },
   {
+    "type": "transient",
+    "named": false
+  },
+  {
     "type": "true",
     "named": false
   },
@@ -5839,6 +6655,10 @@
   },
   {
     "type": "void",
+    "named": false
+  },
+  {
+    "type": "volatile",
     "named": false
   },
   {

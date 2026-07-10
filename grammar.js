@@ -46,8 +46,10 @@ module.exports = grammar({
     [$.map_item, $.ternary_op],
     [$._juxt_argument_list, $.map_item],
     [$.declaration, $.parameter],
-    [$.destructuring_declaration, $._juxtable_expression],
+    [$.destructuring_declaration, $._juxtable_expression, $.parameter],
     [$._expression, $._map_value],
+    [$._juxtable_expression, $.lambda_expression],
+    [$._juxtable_expression, $.destructuring_declaration],
   ],
 
   rules: {
@@ -163,7 +165,7 @@ module.exports = grammar({
       field('value', $._expression),
     ),
 
-    assertion: $ => prec.right(seq('assert', $._expression, optional(seq(',', $._expression)))),
+    assertion: $ => prec.right(seq('assert', $._expression, optional(seq(choice(',', ':'), $._expression)))),
 
     assignment: $ => prec(-1, choice( //??? is -1 ok here? (fixes conflict with expression for ++)
       seq(
@@ -238,6 +240,10 @@ module.exports = grammar({
         'extends',
         field('superclass', $._primary_expression),
       )),
+      optional(seq(
+        'implements',
+        list_of(field('interface', choice($._type, $.identifier))),
+      )),
       field('body', $.closure),
     ),
 
@@ -258,7 +264,7 @@ module.exports = grammar({
     closure: $ => seq(
       '{',
       optional(choice(
-        seq(alias($._param_list, $.parameter_list), '->'),
+        seq(alias($._param_list, $.parameter_list), "->"),
         '->',
       )),
       repeat($._statement),
@@ -367,7 +373,19 @@ module.exports = grammar({
       $.closure,
       $.juxt_function_call,
       $.cast,
+      $.lambda_expression,
       alias("null", $.null),
+    )),
+
+    // Java-style lambda with parenthesized params: (a, b) -> expr, () -> { ... }
+    // The parenthesized form does not collide with Groovy closure params
+    // (closures never parenthesize their params: `{ a -> }`, not `{ (a) -> }`).
+    // The bare single-identifier form `x -> expr` is handled separately in
+    // argument position to avoid ambiguity with closures.
+    lambda_expression: $ => prec.right(seq(
+      field('parameters', seq('(', optional($._param_list), ')')),
+      '->',
+      field('body', choice($._expression, $.closure)),
     )),
 
     // Type cast: (Type) expression
@@ -397,6 +415,7 @@ module.exports = grammar({
       $.string,
       $.list,
       $.map,
+      $.object_creation,
       $._callable_expression,
     )),
 
@@ -479,12 +498,23 @@ module.exports = grammar({
       prec.left(seq(
         '(',
         optional(
-          list_of(choice($.map_item, $._expression)),
+          list_of(choice($.map_item, $._bare_lambda, $._expression)),
         ),
         ')'
       )),
       optional($.closure),
     )),
+
+    // Bare single-identifier lambda `x -> body`, only valid in argument
+    // position where it cannot be confused with a closure parameter list.
+    _bare_lambda: $ => alias(
+      prec.right(seq(
+        field('parameters', $.identifier),
+        '->',
+        field('body', choice($._expression, $.closure)),
+      )),
+      $.lambda_expression,
+    ),
 
     _param_list: $ => prec(1, list_of($.parameter)),
 
@@ -512,13 +542,37 @@ module.exports = grammar({
 
     function_definition: $ => prec(3, seq(
       repeat($.annotation),
-      optional($.access_modifier),
-      repeat($.modifier),
-      field('type', choice($._type, 'def')),
+      choice(
+        // Explicit return type (def or a type), modifiers optional
+        seq(
+          optional($.access_modifier),
+          repeat($.modifier),
+          optional($.type_parameters),
+          field('type', choice($._type, 'def')),
+        ),
+        // No return type but at least an access modifier is present
+        // (Groovy allows `private foo() {}`); requiring a modifier avoids
+        // ambiguity with a trailing-closure function call `foo() {}`.
+        seq(
+          $.access_modifier,
+          repeat($.modifier),
+          optional($.type_parameters),
+        ),
+      ),
       field('function', choice($.identifier, $.quoted_identifier)),
       field('parameters', $.parameter_list),
-      field('body', $.closure), //TODO: optional return
+      field('body', $.closure),
     )),
+
+    // Generic method type parameters: <T>, <T, U>, <T extends Comparable<T>>
+    type_parameters: $ => seq(
+      '<',
+      list_of(seq(
+        choice($._type, $.identifier),
+        optional(seq('extends', choice($._type, $.identifier))),
+      )),
+      '>',
+    ),
 
     identifier: $ => IDENTIFIER_REGEX,
     _type_identifier: $ => alias(TYPE_REGEX, $.identifier),
@@ -836,13 +890,17 @@ module.exports = grammar({
     modifier: $ => choice(
       'static',
       'final',
-      'synchronized'
+      'synchronized',
+      'volatile',
+      'transient',
+      'abstract',
+      'native',
+      'strictfp'
     ),
 
-    //TODO diamond operator
     type_with_generics: $ => seq($._type, $.generics),
 
-    generics: $ => seq('<', list_of($._type), '>'),
+    generics: $ => seq('<', optional(list_of(choice($._type, $.identifier, '?'))), '>'),
 
     unary_op: $ =>
       choice(
@@ -851,11 +909,22 @@ module.exports = grammar({
           ["-", PREC.UNARY],
           ["~", PREC.TOP],
           ["!", PREC.TOP],
-          ["new", PREC.TOP],
         ].map(([operator, precedence]) =>
           prec.left(precedence, seq(operator, $._expression))
         ),
       ),
+
+    // Object creation: new Type(args), new Type<G>(args), new Type<>(args),
+    // new Type[size], new Type[]{...}
+    object_creation: $ => prec.right(PREC.TOP, seq(
+      'new',
+      field('type', choice($._type, $.identifier)),
+      optional($.generics),
+      choice(
+        $.argument_list,
+        repeat1(seq('[', optional($._expression), ']')),
+      ),
+    )),
 
     while_loop: $ => seq(
       'while',

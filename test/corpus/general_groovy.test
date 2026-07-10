@@ -1,0 +1,299 @@
+==========
+Multiple field modifiers
+==========
+class C {
+  private volatile boolean running
+  private static final int MAX = 10
+}
+---
+
+(source_file
+  (class_definition
+    (identifier)
+    (closure
+      (declaration
+        (access_modifier)
+        (modifier)
+        (builtintype)
+        (identifier))
+      (declaration
+        (access_modifier)
+        (modifier)
+        (modifier)
+        (builtintype)
+        (identifier)
+        (number_literal)))))
+
+==========
+Object creation with generics and diamond
+==========
+def a = new HashSet<>()
+def b = new Stack<Map<String, Object>>()
+def c = new ArrayList<String>(10)
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (object_creation
+      (identifier)
+      (generics)
+      (argument_list)))
+  (declaration
+    (identifier)
+    (object_creation
+      (identifier)
+      (generics
+        (type_with_generics
+          (identifier)
+          (generics
+            (identifier)
+            (identifier))))
+      (argument_list)))
+  (declaration
+    (identifier)
+    (object_creation
+      (identifier)
+      (generics
+        (identifier))
+      (argument_list
+        (number_literal)))))
+
+==========
+Object creation with lowercase class name
+==========
+def params = new my_params(defaults << map)
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (object_creation
+      (identifier)
+      (argument_list
+        (binary_op
+          (identifier)
+          (identifier))))))
+
+==========
+Array creation
+==========
+def a = new int[5]
+def b = new String[size]
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (object_creation
+      (builtintype)
+      (number_literal)))
+  (declaration
+    (identifier)
+    (object_creation
+      (identifier)
+      (identifier))))
+
+==========
+Parenthesized lambda expressions
+==========
+def f = (a, b) -> a + b
+def g = () -> foo()
+list.sort((a, b) -> a <=> b)
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (lambda_expression
+      (parameter
+        (identifier))
+      (parameter
+        (identifier))
+      (juxt_function_call
+        (identifier)
+        (argument_list
+          (unary_op
+            (identifier))))))
+  (declaration
+    (identifier)
+    (lambda_expression
+      (function_call
+        (identifier)
+        (argument_list))))
+  (function_call
+    (dotted_identifier
+      (identifier)
+      (identifier))
+    (argument_list
+      (lambda_expression
+        (parameter
+          (identifier))
+        (parameter
+          (identifier))
+        (binary_op
+          (identifier)
+          (identifier))))))
+
+==========
+Bare lambda in argument position
+==========
+notifyEvent(observers, ob -> ob.onComplete())
+---
+
+(source_file
+  (function_call
+    (identifier)
+    (argument_list
+      (identifier)
+      (lambda_expression)
+      (lambda_expression)
+      (lambda_expression
+        (function_call
+          (dotted_identifier
+            (identifier)
+            (identifier))
+          (argument_list))))))
+
+==========
+Method without return type
+==========
+class C {
+  private helper() { doWork() }
+  protected configure(String name, int size) { setup() }
+}
+---
+
+(source_file
+  (class_definition
+    (identifier)
+    (closure
+      (function_definition
+        (access_modifier)
+        (identifier)
+        (parameter_list)
+        (closure
+          (function_call
+            (identifier)
+            (argument_list))))
+      (function_definition
+        (access_modifier)
+        (identifier)
+        (parameter_list
+          (parameter
+            (identifier)
+            (identifier))
+          (parameter
+            (builtintype)
+            (identifier)))
+        (closure
+          (function_call
+            (identifier)
+            (argument_list)))))))
+
+==========
+Generic method with type parameters
+==========
+class C {
+  private static <T> void notify(List<T> observers) { }
+}
+---
+
+(source_file
+  (class_definition
+    (identifier)
+    (closure
+      (function_definition
+        (access_modifier)
+        (modifier)
+        (type_parameters
+          (identifier))
+        (builtintype)
+        (identifier)
+        (parameter_list
+          (parameter
+            (type_with_generics
+              (identifier)
+              (generics
+                (identifier)))
+            (identifier)))
+        (closure)))))
+
+==========
+Generic types with type-parameter names
+==========
+def a = new HashSet<T>()
+Map<K, V> lookup = [:]
+List<?> anything = []
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (object_creation
+      (identifier)
+      (generics
+        (identifier))
+      (argument_list)))
+  (declaration
+    (type_with_generics
+      (identifier)
+      (generics
+        (identifier)
+        (identifier)))
+    (identifier)
+    (map))
+  (declaration
+    (type_with_generics
+      (identifier)
+      (generics))
+    (identifier)
+    (list)))
+
+==========
+Assert with colon message
+==========
+assert x >= 0 : "must be non-negative"
+assert result != null: "result is null"
+---
+
+(source_file
+  (assertion
+    (binary_op
+      (identifier)
+      (number_literal))
+    (string
+      (string_content)))
+  (assertion
+    (binary_op
+      (identifier)
+      (null))
+    (string
+      (string_content))))
+
+==========
+Class with implements clause
+==========
+class Session implements ISession {
+  def run() { }
+}
+abstract class Base extends Parent implements Foo, Bar {
+}
+---
+
+(source_file
+  (class_definition
+    (identifier)
+    (identifier)
+    (closure
+      (function_definition
+        (identifier)
+        (parameter_list)
+        (closure))))
+  (class_definition
+    (modifier)
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)
+    (closure)))

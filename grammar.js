@@ -246,7 +246,10 @@ module.exports = grammar({
 
     closure: $ => seq(
       '{',
-      optional(seq(alias($._param_list, $.parameter_list), '->')),
+      optional(choice(
+        seq(alias($._param_list, $.parameter_list), '->'),
+        '->',
+      )),
       repeat($._statement),
       optional($._expression),
       '}',

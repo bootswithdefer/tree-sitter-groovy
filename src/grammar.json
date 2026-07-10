@@ -1761,16 +1761,25 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
+              "type": "CHOICE",
               "members": [
                 {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "_param_list"
-                  },
-                  "named": true,
-                  "value": "parameter_list"
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "ALIAS",
+                      "content": {
+                        "type": "SYMBOL",
+                        "name": "_param_list"
+                      },
+                      "named": true,
+                      "value": "parameter_list"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "->"
+                    }
+                  ]
                 },
                 {
                   "type": "STRING",

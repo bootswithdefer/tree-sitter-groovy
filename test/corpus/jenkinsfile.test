@@ -1,0 +1,204 @@
+==========
+Destructuring declaration
+==========
+def (a, b) = foo()
+---
+
+(source_file
+  (declaration
+    name: (destructuring_declaration
+      (identifier)
+      (identifier))
+    value: (function_call
+      function: (identifier)
+      args: (argument_list))))
+
+==========
+Tuple assignment without def
+==========
+(a, b) = foo()
+---
+
+(source_file
+  (assignment
+    (destructuring_declaration
+      (identifier)
+      (identifier))
+    (function_call
+      function: (identifier)
+      args: (argument_list))))
+
+==========
+Multi-variable declaration
+==========
+def host, user, vaultPath
+---
+
+(source_file
+  (multi_variable_declaration
+    (identifier)
+    (identifier)
+    (identifier)))
+
+==========
+Dotted annotation
+==========
+@groovy.transform.Field
+def verbose = false
+---
+
+(source_file
+  (declaration
+    (annotation
+      (identifier)
+      (identifier)
+      (identifier))
+    name: (identifier)
+    value: (boolean_literal)))
+
+==========
+Closure method chain
+==========
+def x = [1, 2].collect { it }.join(",")
+---
+
+(source_file
+  (declaration
+    name: (identifier)
+    value: (dotted_identifier
+      (list
+        (number_literal)
+        (number_literal))
+      (identifier)))
+  (function_call
+    function: (dotted_identifier
+      (closure
+        (identifier))
+      (identifier))
+    args: (argument_list
+      (string
+        (string_content)))))
+
+==========
+Juxt call as expression value
+==========
+def res = httpRequest contentType: 'JSON', httpMode: 'POST'
+---
+
+(source_file
+  (declaration
+    name: (identifier)
+    value: (juxt_function_call
+      function: (identifier)
+      args: (argument_list
+        (map_item
+          key: (identifier)
+          value: (string
+            (string_content)))
+        (map_item
+          key: (identifier)
+          value: (string
+            (string_content)))))))
+
+==========
+Juxt call does not consume next line
+==========
+writeFile file: 'x', text: msg
+sh "hello"
+---
+
+(source_file
+  (juxt_function_call
+    function: (identifier)
+    args: (argument_list
+      (map_item
+        key: (identifier)
+        value: (string
+          (string_content)))
+      (map_item
+        key: (identifier)
+        value: (identifier))))
+  (juxt_function_call
+    function: (identifier)
+    args: (argument_list
+      (string
+        (string_content)))))
+
+==========
+Pipeline followed by function definition
+==========
+pipeline {
+  stages {
+    stage('test') {
+      steps {
+        sh 'hello'
+      }
+    }
+  }
+}
+
+def helper(String arg) {
+  sh arg
+}
+---
+
+(source_file
+  (pipeline
+    (closure
+      (juxt_function_call
+        function: (identifier)
+        args: (argument_list
+          (closure
+            (function_call
+              function: (identifier)
+              args: (argument_list
+                (string
+                  (string_content))
+                (closure
+                  (juxt_function_call
+                    function: (identifier)
+                    args: (argument_list
+                      (closure
+                        (juxt_function_call
+                          function: (identifier)
+                          args: (argument_list
+                            (string
+                              (string_content)))))))))))))))
+  (function_definition
+    function: (identifier)
+    parameters: (parameter_list
+      (parameter
+        type: (identifier)
+        name: (identifier)))
+    body: (closure
+      (juxt_function_call
+        function: (identifier)
+        args: (argument_list
+          (identifier))))))
+
+==========
+Qualified type in catch
+==========
+try {
+  foo()
+} catch (org.example.MyException e) {
+  bar()
+}
+---
+
+(source_file
+  (try_statement
+    body: (closure
+      (function_call
+        function: (identifier)
+        args: (argument_list)))
+    catch_exception: (declaration
+      type: (qualified_type
+        (identifier)
+        (identifier)
+        (identifier))
+      name: (identifier))
+    catch_body: (closure
+      (function_call
+        function: (identifier)
+        args: (argument_list)))))

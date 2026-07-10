@@ -152,7 +152,7 @@ module.exports = grammar({
       optional($.argument_list),
     )),
 
-    assertion: $ => seq('assert', $._expression),
+    assertion: $ => prec.right(seq('assert', $._expression, optional(seq(',', $._expression)))),
 
     assignment: $ => prec(-1, choice( //??? is -1 ok here? (fixes conflict with expression for ++)
       seq(

@@ -263,3 +263,16 @@ def foo() {}
     function: (identifier)
     parameters: (parameter_list)
     body: (closure)))
+
+==========
+Assert with message
+==========
+assert x != null, "message"
+---
+(source_file
+  (assertion
+    (binary_op
+      (identifier)
+      (null))
+    (string
+      (string_content))))

@@ -12,6 +12,42 @@ shared pipeline libraries, and general Groovy source.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-07-11
+
+Robustness pass over real-world Jenkinsfiles: 181/182 sampled remote-repo
+Jenkinsfiles now parse with zero errors (the one holdout is a non-Groovy
+edge case). 139/139 corpus tests pass with 100% named-node-type coverage.
+
+### Added
+
+- `named_argument` — assignment-style named arguments in calls, e.g.
+  `runAlembic(applyOnBranch=mainBranch)`.
+- Capitalized / mixed-case identifiers (type-shaped names such as
+  `TF_VAR_git_hash`) are now accepted as assignment targets, so
+  `TF_VAR_x = readFile "..."` parses instead of mis-parsing as a declaration.
+
+### Changed
+
+- `groovy_doc` is now a single permissive token matching any `/** ... */`
+  block. The previous rule (mandatory first-line + `@param`/`@throws`
+  sub-parsing) failed on common groovydoc like `/** hi **/`, and — because
+  `groovy_doc` is an `extra` — that turned into a whole-file parse error.
+  Groovydoc now parses robustly for arbitrary content.
+- `queries/highlights.scm` updated to capture the single `(groovy_doc)` node
+  (dropped the now-nonexistent sub-node captures).
+- Test corpus reorganized: general-Groovy cases moved out of
+  `test/corpus/jenkinsfile.test` into topical files (`declaration`, `closure`,
+  `annotation`, `for`, `each`, `map`, `list`, `string`, `comment`,
+  `general_groovy`). `jenkinsfile.test` now holds only Jenkinsfile-specific
+  tests.
+
+### Removed
+
+- `groovy_doc_param`, `groovy_doc_throws`, `groovy_doc_tag`,
+  `groovy_doc_at_text`, and `first_line` node types, which are no longer
+  produced now that `groovy_doc` is a token. Consumers querying these node
+  types must update to `(groovy_doc)`.
+
 ## [0.1.0] - 2026-07-10
 
 First versioned release of the fork. Parses 194/194 sample Jenkinsfiles and
@@ -48,5 +84,6 @@ pass with 100% named-node-type coverage (enforced in CI via prek).
 - Slashy-string (`/regex/`) handling and the `$/...$/` dollar-slashy ambiguity.
 - Statements following a top-level `pipeline { }` block.
 
-[Unreleased]: https://github.com/bootswithdefer/tree-sitter-groovy/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/bootswithdefer/tree-sitter-groovy/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/bootswithdefer/tree-sitter-groovy/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/bootswithdefer/tree-sitter-groovy/releases/tag/v0.1.0

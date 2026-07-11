@@ -54,3 +54,31 @@ try {
         args: (argument_list
           (string
             (string_content)))))))
+
+==========
+Qualified type in catch
+==========
+try {
+  foo()
+} catch (org.example.MyException e) {
+  bar()
+}
+---
+
+(source_file
+  (try_statement
+    body: (closure
+      (function_call
+        function: (identifier)
+        args: (argument_list)))
+    catch_exception: (declaration
+      type: (qualified_type
+        (identifier)
+        (identifier)
+        (identifier))
+      name: (identifier))
+    catch_body: (closure
+      (function_call
+        function: (identifier)
+        args: (argument_list)))))
+

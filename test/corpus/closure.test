@@ -90,3 +90,106 @@ def myClosure = {
           (argument_list
             (unary_op
               (identifier))))))))
+
+==========
+Closure method chain
+==========
+def x = [1, 2].collect { it }.join(",")
+---
+
+(source_file
+  (declaration
+    name: (identifier)
+    value: (dotted_identifier
+      (list
+        (number_literal)
+        (number_literal))
+      (identifier)))
+  (function_call
+    function: (dotted_identifier
+      (closure
+        (identifier))
+      (identifier))
+    args: (argument_list
+      (string
+        (string_content)))))
+
+
+==========
+Closure params with explicit types
+==========
+def c = { String a, int b -> a }
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (closure
+      (parameter_list
+        (parameter
+          (identifier)
+          (identifier))
+        (parameter
+          (builtintype)
+          (identifier)))
+      (identifier))))
+
+
+==========
+Closure with def params
+==========
+def c = { def a, def b -> a }
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (closure
+      (parameter_list
+        (parameter
+          (identifier))
+        (parameter
+          (identifier)))
+      (identifier))))
+
+
+==========
+Closure no-arg arrow
+==========
+def c = { -> foo() }
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (closure
+      (function_call
+        (identifier)
+        (argument_list)))))
+
+
+==========
+Chained method closures
+==========
+def x = [1, 2].collect { it }.findAll { it > 0 }
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (dotted_identifier
+      (list
+        (number_literal)
+        (number_literal))
+      (identifier)))
+  (juxt_function_call
+    (dotted_identifier
+      (closure
+        (identifier))
+      (identifier))
+    (argument_list
+      (closure
+        (binary_op
+          (identifier)
+          (number_literal))))))
+

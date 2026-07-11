@@ -123,3 +123,36 @@ for (x in 1..5) {
         args: (argument_list
           (string
             (string_content)))))))
+
+==========
+Enhanced for loop with typed variable
+==========
+for (char ch : arr) { x() }
+---
+
+(source_file
+  (for_in_loop
+    type: (builtintype)
+    variable: (identifier)
+    collection: (identifier)
+    body: (closure
+      (function_call
+        function: (identifier)
+        args: (argument_list)))))
+
+
+==========
+For-in loop preserved
+==========
+for (x in list) { y() }
+---
+
+(source_file
+  (for_in_loop
+    (identifier)
+    (identifier)
+    (closure
+      (function_call
+        (identifier)
+        (argument_list)))))
+

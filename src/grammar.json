@@ -766,6 +766,10 @@
                   },
                   {
                     "type": "SYMBOL",
+                    "name": "_type_identifier"
+                  },
+                  {
+                    "type": "SYMBOL",
                     "name": "parenthesized_expression"
                   },
                   {
@@ -2068,98 +2072,20 @@
       ]
     },
     "groovy_doc": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "/**"
-        },
-        {
-          "type": "IMMEDIATE_TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": "[*\\n\\s]+"
-          }
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "IMMEDIATE_TOKEN",
-            "content": {
-              "type": "PATTERN",
-              "value": "([^\\n.*]|\\*[^/])+[.]?"
-            }
+      "type": "TOKEN",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "/**"
           },
-          "named": true,
-          "value": "first_line"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "groovy_doc_param"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "groovy_doc_throws"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "groovy_doc_tag"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "groovy_doc_at_text"
-              },
-              {
-                "type": "PATTERN",
-                "value": "([^@*]|\\*[^/])([^*\\s@]|[^\\s\\n]@|\\*[^/])+"
-              }
-            ]
+          {
+            "type": "PATTERN",
+            "value": "[^*]*\\*+([^/*][^*]*\\*+)*\\/"
           }
-        },
-        {
-          "type": "STRING",
-          "value": "*/"
-        }
-      ]
-    },
-    "groovy_doc_param": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "@param"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "identifier"
-        }
-      ]
-    },
-    "groovy_doc_throws": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "@throws"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "identifier"
-        }
-      ]
-    },
-    "groovy_doc_tag": {
-      "type": "PATTERN",
-      "value": "@[a-z]+"
-    },
-    "groovy_doc_at_text": {
-      "type": "PATTERN",
-      "value": "@[^@\\s*]*"
+        ]
+      }
     },
     "declaration": {
       "type": "SEQ",
@@ -3084,6 +3010,10 @@
                                   "members": [
                                     {
                                       "type": "SYMBOL",
+                                      "name": "named_argument"
+                                    },
+                                    {
+                                      "type": "SYMBOL",
                                       "name": "map_item"
                                     },
                                     {
@@ -3110,6 +3040,10 @@
                             {
                               "type": "CHOICE",
                               "members": [
+                                {
+                                  "type": "SYMBOL",
+                                  "name": "named_argument"
+                                },
                                 {
                                   "type": "SYMBOL",
                                   "name": "map_item"
@@ -3163,6 +3097,44 @@
                 "type": "BLANK"
               }
             ]
+          }
+        ]
+      }
+    },
+    "named_argument": {
+      "type": "PREC_DYNAMIC",
+      "value": 1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "key",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_type_identifier"
+                }
+              ]
+            }
+          },
+          {
+            "type": "STRING",
+            "value": "="
+          },
+          {
+            "type": "FIELD",
+            "name": "value",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expression"
+            }
           }
         ]
       }
@@ -5609,16 +5581,8 @@
       "qualified_type"
     ],
     [
-      "map_item",
-      "ternary_op"
-    ],
-    [
       "_juxt_argument_list",
       "map_item"
-    ],
-    [
-      "declaration",
-      "parameter"
     ],
     [
       "destructuring_declaration",
@@ -5628,10 +5592,6 @@
     [
       "_expression",
       "_map_value"
-    ],
-    [
-      "_juxtable_expression",
-      "lambda_expression"
     ],
     [
       "_juxtable_expression",

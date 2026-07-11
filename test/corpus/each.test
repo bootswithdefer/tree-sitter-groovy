@@ -44,3 +44,19 @@ Each loop on range syntax
           function: (identifier)
           args: (argument_list
             (identifier)))))))
+
+==========
+For each with def typed variable
+==========
+for (def x : list) { y() }
+---
+
+(source_file
+  (for_in_loop
+    (identifier)
+    (identifier)
+    (closure
+      (function_call
+        (identifier)
+        (argument_list)))))
+

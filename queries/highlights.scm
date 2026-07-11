@@ -138,11 +138,3 @@
 "pipeline" @keyword
 
 (groovy_doc) @comment.documentation
-(groovy_doc 
-  [
-    (groovy_doc_param)
-    (groovy_doc_throws)
-    (groovy_doc_tag)
-  ] @string.special)
-(groovy_doc (groovy_doc_param (identifier) @variable.parameter))
-(groovy_doc (groovy_doc_throws (identifier) @type))

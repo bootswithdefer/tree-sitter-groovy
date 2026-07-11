@@ -1,5 +1,5 @@
 {
-  "name": "@murtaza64/tree-sitter-groovy",
+  "name": "@bootswithdefer/tree-sitter-groovy",
   "version": "0.2.0",
   "description": "groovy grammar for tree-sitter",
   "main": "bindings/node",

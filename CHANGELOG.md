@@ -12,6 +12,17 @@ shared pipeline libraries, and general Groovy source.
 
 ## [Unreleased]
 
+### Changed
+
+- Renamed the npm package to `@bootswithdefer/tree-sitter-groovy` (the fork's
+  own scope; it previously still carried the upstream `@murtaza64` scope and
+  could not be published from this fork).
+- Rewrote `.github/workflows/publish.yml` to publish via npm **OIDC trusted
+  publishing** (no stored `NPM_TOKEN`, provenance attached), triggered on `v*`
+  tags — consistent with `prettier-plugin-jenkinsfile`. The package is
+  published source-only; consumers build the native binding on install via
+  `node-gyp-build`.
+
 ## [0.2.0] - 2026-07-11
 
 Robustness pass over real-world Jenkinsfiles: 181/182 sampled remote-repo

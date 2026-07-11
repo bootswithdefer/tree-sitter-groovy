@@ -43,12 +43,9 @@ module.exports = grammar({
     [$._juxtable_expression, $._juxt_argument_list],
     [$._juxtable_expression, $.qualified_type],
     [$.dotted_identifier, $.qualified_type],
-    [$.map_item, $.ternary_op],
     [$._juxt_argument_list, $.map_item],
-    [$.declaration, $.parameter],
     [$.destructuring_declaration, $._juxtable_expression, $.parameter],
     [$._expression, $._map_value],
-    [$._juxtable_expression, $.lambda_expression],
     [$._juxtable_expression, $.destructuring_declaration],
   ],
 
@@ -169,7 +166,7 @@ module.exports = grammar({
 
     assignment: $ => prec(-1, choice( //??? is -1 ok here? (fixes conflict with expression for ++)
       seq(
-        choice($._juxtable_expression, $.parenthesized_expression, $.destructuring_declaration),
+        choice($._juxtable_expression, $._type_identifier, $.parenthesized_expression, $.destructuring_declaration),
         choice('=', '**=', '*=', '/=', '%=', '+=', '-=',
           '<<=', '>>=', '>>>=', '&=', '^=', '|=', '?='),
         $._expression
@@ -277,42 +274,9 @@ module.exports = grammar({
       seq('/*', /[^*]*\*+([^/*][^*]*\*+)*\//), // not sure why comments work better as seq
     ),
 
-    groovy_doc: $ =>
-      // seq('/**', /[^*]*\*+([^/*][^*]*\*+)*\//),
-      seq(
-        '/**',
-        // optional(
-          token.immediate(/[*\n\s]+/),
-          alias(token.immediate(/([^\n.*]|\*[^/])+[.]?/), $.first_line),
-        // ),
-        repeat(
-          choice(
-            // /[^*\s]*(\*[^/][^*\s]+)*/
-            $.groovy_doc_param,
-            $.groovy_doc_throws,
-            $.groovy_doc_tag,
-            $.groovy_doc_at_text,
-            /([^@*]|\*[^/])([^*\s@]|[^\s\n]@|\*[^/])+/,
-          ),
-        ),
-        '*/'
-      ),
-
-    groovy_doc_param: $ => seq (
-      '@param',
-      $.identifier
-    ),
-
-    groovy_doc_throws: $ => seq (
-      '@throws',
-      $.identifier
-    ),
-
-    groovy_doc_tag: $ =>
-      /@[a-z]+/,
-
-    groovy_doc_at_text: $ =>
-      /@[^@\s*]*/,
+    // Groovydoc / block comment starting with /**. Matched as a single
+    // token (robust for any content); the formatter treats it verbatim.
+    groovy_doc: $ => token(seq('/**', /[^*]*\*+([^/*][^*]*\*+)*\//)),
 
     declaration: $ => seq(
       repeat($.annotation),
@@ -498,11 +462,18 @@ module.exports = grammar({
       prec.left(seq(
         '(',
         optional(
-          list_of(choice($.map_item, $._bare_lambda, $._expression)),
+          list_of(choice($.named_argument, $.map_item, $._bare_lambda, $._expression)),
         ),
         ')'
       )),
       optional($.closure),
+    )),
+
+    // Assignment-style named argument: `foo(key=value)`.
+    named_argument: $ => prec.dynamic(1, seq(
+      field('key', choice($.identifier, $._type_identifier)),
+      '=',
+      field('value', $._expression),
     )),
 
     // Bare single-identifier lambda `x -> body`, only valid in argument

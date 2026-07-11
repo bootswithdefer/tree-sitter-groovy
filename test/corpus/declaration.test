@@ -48,3 +48,89 @@ Declare without explicit type or def
     name: (identifier)
     value: (string
       (string_content))))
+
+==========
+Destructuring declaration
+==========
+def (a, b) = foo()
+---
+
+(source_file
+  (declaration
+    name: (destructuring_declaration
+      (identifier)
+      (identifier))
+    value: (function_call
+      function: (identifier)
+      args: (argument_list))))
+
+
+==========
+Tuple assignment without def
+==========
+(a, b) = foo()
+---
+
+(source_file
+  (assignment
+    (destructuring_declaration
+      (identifier)
+      (identifier))
+    (function_call
+      function: (identifier)
+      args: (argument_list))))
+
+
+==========
+Destructuring declaration three vars
+==========
+def (a, b, c) = foo()
+---
+
+(source_file
+  (declaration
+    (destructuring_declaration
+      (identifier)
+      (identifier)
+      (identifier))
+    (function_call
+      (identifier)
+      (argument_list))))
+
+
+==========
+Tuple assignment three vars
+==========
+(a, b, c) = foo()
+---
+
+(source_file
+  (assignment
+    (destructuring_declaration
+      (identifier)
+      (identifier)
+      (identifier))
+    (function_call
+      (identifier)
+      (argument_list))))
+
+
+==========
+Varargs parameter
+==========
+def f(String x, int... args) { x }
+---
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)
+        (identifier))
+      (parameter
+        (builtintype)
+        (identifier)))
+    (closure
+      (identifier))))
+

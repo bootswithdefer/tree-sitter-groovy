@@ -60,3 +60,46 @@ def str_key = ["hello": false]
       (map_item
         key: (string (string_content))
         value: (boolean_literal)))))
+
+==========
+Map value method call with explicit parens
+==========
+a = [ c: x.collect({ it.id }), d: 1 ]
+---
+
+(source_file
+  (assignment
+    (identifier)
+    (map
+      (map_item
+        (identifier)
+        (function_call
+          (dotted_identifier
+            (identifier)
+            (identifier))
+          (argument_list
+            (closure
+              (dotted_identifier
+                (identifier)
+                (identifier))))))
+      (map_item
+        (identifier)
+        (number_literal)))))
+
+
+==========
+Spread map entry
+==========
+def m = [*: base, k: 1]
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (map
+      (spread_map_entry
+        (identifier))
+      (map_item
+        (identifier)
+        (number_literal)))))
+

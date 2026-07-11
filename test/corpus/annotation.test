@@ -80,3 +80,80 @@ static class f {
     (modifier)
     name: (identifier)
     body: (closure)))
+
+==========
+Dotted annotation
+==========
+@groovy.transform.Field
+def verbose = false
+---
+
+(source_file
+  (declaration
+    (annotation
+      (identifier)
+      (identifier)
+      (identifier))
+    name: (identifier)
+    value: (boolean_literal)))
+
+
+==========
+Annotation with single named argument
+==========
+@Field(name = "x")
+def y = 2
+---
+
+(source_file
+  (declaration
+    (annotation
+      (identifier)
+      (annotation_arguments
+        (annotation_member
+          (identifier)
+          (string
+            (string_content)))))
+    (identifier)
+    (number_literal)))
+
+
+==========
+Annotation with multiple named arguments
+==========
+@Timeout(value = 5, unit = SECONDS)
+class Foo {}
+---
+
+(source_file
+  (class_definition
+    (annotation
+      (identifier)
+      (annotation_arguments
+        (annotation_member
+          (identifier)
+          (number_literal))
+        (annotation_member
+          (identifier)
+          (identifier))))
+    (identifier)
+    (closure)))
+
+
+==========
+Annotation with positional argument
+==========
+@Grab("group:artifact:1.0")
+def y = 2
+---
+
+(source_file
+  (declaration
+    (annotation
+      (identifier)
+      (annotation_arguments
+        (string
+          (string_content))))
+    (identifier)
+    (number_literal)))
+

@@ -297,3 +297,278 @@ abstract class Base extends Parent implements Foo, Bar {
     (identifier)
     (identifier)
     (closure)))
+
+
+================
+Named argument (key=value)
+================
+
+foo(applyOnBranch=bar)
+
+---
+
+(source_file
+  (function_call
+    function: (identifier)
+    args: (argument_list
+      (named_argument
+        key: (identifier)
+        value: (identifier)))))
+
+==========
+Juxt call as expression value
+==========
+def res = httpRequest contentType: 'JSON', httpMode: 'POST'
+---
+
+(source_file
+  (declaration
+    name: (identifier)
+    value: (juxt_function_call
+      function: (identifier)
+      args: (argument_list
+        (map_item
+          key: (identifier)
+          value: (string
+            (string_content)))
+        (map_item
+          key: (identifier)
+          value: (string
+            (string_content)))))))
+
+
+==========
+Juxt call does not consume next line
+==========
+writeFile file: 'x', text: msg
+sh "hello"
+---
+
+(source_file
+  (juxt_function_call
+    function: (identifier)
+    args: (argument_list
+      (map_item
+        key: (identifier)
+        value: (string
+          (string_content)))
+      (map_item
+        key: (identifier)
+        value: (identifier))))
+  (juxt_function_call
+    function: (identifier)
+    args: (argument_list
+      (string
+        (string_content)))))
+
+
+==========
+Type cast as argument
+==========
+foo((int) ch)
+---
+
+(source_file
+  (function_call
+    function: (identifier)
+    args: (argument_list
+      (cast
+        type: (builtintype)
+        value: (identifier)))))
+
+
+==========
+Explicit generic method invocation
+==========
+Collections.<DomainRequirement>emptyList()
+---
+
+(source_file
+  (function_call
+    function: (dotted_identifier
+      (identifier)
+      (generics
+        (identifier))
+      (identifier))
+    args: (argument_list)))
+
+
+==========
+Line continuation with backslash
+==========
+def x = a +\
+  b
+---
+
+(source_file
+  (declaration
+    name: (identifier)
+    value: (binary_op
+      (identifier)
+      (identifier))))
+
+
+==========
+Assert with message
+==========
+assert x != null, "message"
+---
+
+(source_file
+  (assertion
+    (binary_op
+      (identifier)
+      (null))
+    (string
+      (string_content))))
+
+
+==========
+Cast in method argument chain
+==========
+x.indexOf((int) ch)
+---
+
+(source_file
+  (function_call
+    (dotted_identifier
+      (identifier)
+      (identifier))
+    (argument_list
+      (cast
+        (builtintype)
+        (identifier)))))
+
+
+==========
+Cast to builtin assigned
+==========
+int x = (int) ch
+---
+
+(source_file
+  (declaration
+    (builtintype)
+    (identifier)
+    (cast
+      (builtintype)
+      (identifier))))
+
+
+==========
+Assert without message
+==========
+assert x == 1
+---
+
+(source_file
+  (assertion
+    (binary_op
+      (identifier)
+      (number_literal))))
+
+
+==========
+Assert with interpolated message
+==========
+assert computer != null, "node '${node}' not found"
+---
+
+(source_file
+  (assertion
+    (binary_op
+      (identifier)
+      (null))
+    (string
+      (string_content)
+      (interpolation
+        (identifier))
+      (string_content))))
+
+
+==========
+Explicit generic method two type args
+==========
+Collections.<String, Integer>emptyMap()
+---
+
+(source_file
+  (function_call
+    (dotted_identifier
+      (identifier)
+      (generics
+        (identifier)
+        (identifier))
+      (identifier))
+    (argument_list)))
+
+
+==========
+Qualified name as comparison value
+==========
+def x = a.findAll { it.class == org.foo.Bar.Baz }
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (juxt_function_call
+      (dotted_identifier
+        (identifier)
+        (identifier))
+      (argument_list
+        (closure
+          (binary_op
+            (dotted_identifier
+              (identifier)
+              (identifier))
+            (dotted_identifier
+              (dotted_identifier
+                (dotted_identifier
+                  (identifier)
+                  (identifier))
+                (identifier))
+              (identifier))))))))
+
+
+==========
+Qualified return and parameter types
+==========
+java.util.ArrayList foo(java.util.LinkedHashMap tree, id) { bar() }
+---
+
+(source_file
+  (function_definition
+    (qualified_type
+      (identifier)
+      (identifier)
+      (identifier))
+    (identifier)
+    (parameter_list
+      (parameter
+        (qualified_type
+          (identifier)
+          (identifier)
+          (identifier))
+        (identifier))
+      (parameter
+        (identifier)))
+    (closure
+      (function_call
+        (identifier)
+        (argument_list)))))
+
+
+==========
+Continue statement
+==========
+while (x) { continue }
+---
+
+(source_file
+  (while_loop
+    condition: (parenthesized_expression
+      (identifier))
+    body: (closure
+      (continue))))
+

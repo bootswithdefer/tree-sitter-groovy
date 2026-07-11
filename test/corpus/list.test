@@ -36,3 +36,19 @@ def nested = ["hello", ["world", ["three"]]]
         (list
           (string
             (string_content)))))))
+
+==========
+Spread list element
+==========
+def x = [1, *other, 2]
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (list
+      (number_literal)
+      (access_op
+        (identifier))
+      (number_literal))))
+

@@ -190,3 +190,45 @@ $/ escaped slash
         (identifier))
       (escape_sequence)
       (string_content))))
+
+==========
+Regex as GString with dollar anchor
+==========
+def m = branches[0] ==~ "^${it.toString()}\$"
+---
+
+(source_file
+  (declaration
+    (identifier)
+    (binary_op
+      (juxt_function_call
+        (identifier)
+        (argument_list
+          (list
+            (number_literal))))
+      (string
+        (string_content)
+        (interpolation
+          (function_call
+            (dotted_identifier
+              (identifier)
+              (identifier))
+            (argument_list)))
+        (escape_sequence)))))
+
+
+==========
+Triple-quoted string with internal quotes before escape
+==========
+def s = '''x''\ny'''
+---
+
+(source_file
+  (declaration
+    name: (identifier)
+    value: (string
+      (string_content)
+      (string_internal_quote)
+      (escape_sequence)
+      (string_content))))
+
